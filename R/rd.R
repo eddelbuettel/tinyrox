@@ -367,23 +367,28 @@ format_usage <- function(
         return(single_line)
     }
 
-    # Otherwise, wrap to multiple lines like roxygen2
-    # roxygen2 uses 2-space indent
-    indent <- "  "
+    # Wrap to multiple lines, packing multiple args per line
+    # Continuation lines indented to align after opening paren
+    open <- paste0(display_name, "(")
+    cont_indent <- paste(rep(" ", nchar(open)), collapse = "")
     lines <- character()
-    lines <- c(lines, paste0(display_name, "("))
+    current <- open
 
     for (i in seq_along(args)) {
         arg <- args[i]
-        if (i < length(args)) {
-            suffix <- ","
+        suffix <- if (i < length(args)) ", " else ""
+        piece <- paste0(arg, suffix)
+
+        if (nchar(current) + nchar(piece) > 80 && current != open) {
+            lines <- c(lines, sub(",? $", ",", current))
+            current <- paste0(cont_indent, piece)
         } else {
-            suffix <- ""
+            current <- paste0(current, piece)
         }
-        lines <- c(lines, paste0(indent, arg, suffix))
     }
 
-    lines <- c(lines, ")")
+    current <- paste0(current, ")")
+    lines <- c(lines, current)
     paste(lines, collapse = "\n")
 }
 
