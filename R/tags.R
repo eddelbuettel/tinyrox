@@ -47,6 +47,14 @@ SUPPORTED_TAGS <- c(SUPPORTED_DOC_TAGS, SUPPORTED_NS_TAGS)
 #' @param file Source file (for error messages).
 #' @param line_num Starting line number (for error messages).
 #' @return A list with parsed tag values.
+#'
+#' @examples
+#' lines <- c("Title Here", "", "Description text.", "", "@param x A number.",
+#'   "@return The number.", "@export")
+#' tags <- parse_tags(lines, "my_function")
+#' tags$title
+#' tags$params
+#'
 #' @export
 parse_tags <- function (lines, object_name, file = NULL, line_num = NULL) {
     result <- list(
@@ -272,8 +280,9 @@ save_tag <- function (result, tag, arg, accumulator, file, line_num) {
             result$imports <- c(result$imports, list(value))
         },
         "importFrom" = {
-            # Parse: pkg sym1 sym2 ...
-            parts <- strsplit(value, "\\s+") [[1]]
+            # Parse: pkg sym1 sym2 ... (single-line only, ignore continuation)
+            line1 <- if (!is.null(arg)) arg else value
+            parts <- strsplit(line1, "\\s+") [[1]]
             if (length(parts) >= 2) {
                 result$importFroms <- c(result$importFroms, list(list(
                             pkg = parts[1],
