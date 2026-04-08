@@ -1,2 +1,4 @@
 man-md/
 .Rproj.user
+.Rhistory
+*.Rproj

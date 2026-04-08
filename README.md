@@ -137,7 +137,7 @@ tinyrox is part of the tinyverse toolchain for R package development:
 | **tinyrox** | Documentation & NAMESPACE |
 | **tinypkgr** | install, load_all, check, build |
 | **tinytest** | Unit testing |
-| **fyi** | Rd to markdown (LLM context, static sites) |
+| **rformat** | Token-based code formatter |
 
 ```r
 # Edit R/*.R files with #' comments
