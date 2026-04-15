@@ -9,7 +9,7 @@ tinyrox is a lightweight alternative to roxygen2 that generates valid `.Rd` file
 ## Installation
 
 ```r
-remotes::install_github("cornball-ai/tinyrox")
+install.packages("tinyrox")
 ```
 
 ## Usage
