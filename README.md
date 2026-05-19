@@ -40,15 +40,14 @@ check_cran()
 | `@return` | Return value |
 | `@value` | Alias for `@return` |
 | `@examples` | Code examples (verbatim) |
-| `@example path` | Include example from file |
 | `@seealso` | Cross-references |
 | `@references` | Citations |
-| `@section Title:` | Custom section |
-| `@author` | Author information |
-| `@family name` | Related functions |
+| `@section Title:` | Custom section (package-level docs only) |
+| `@author` | Author information (package-level docs only) |
 | `@aliases` | Additional topic aliases |
 | `@keywords` | Rd keywords (e.g., `internal`) |
 | `@name` | Explicit topic name |
+| `@rdname` | Group multiple blocks into one Rd file |
 | `@inheritParams fn` | Copy params from another function |
 | `@noRd` | Skip Rd generation |
 
@@ -125,7 +124,7 @@ tinyrox follows the [tinyverse](https://www.tinyverse.org) philosophy:
 **What tinyrox does NOT do:**
 - Markdown parsing
 - Automatic dependency inference
-- `@rdname` grouping magic
+- `@family` (use `@seealso`)
 - pkgdown integration
 
 ## Development Workflow
