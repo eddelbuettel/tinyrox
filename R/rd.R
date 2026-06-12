@@ -22,6 +22,8 @@ render_sections <- function(sections) {
 #' @param tags Parsed tags from parse_tags().
 #' @param formals Character vector of formal argument names (for functions).
 #' @param source_file Source file path (for header comment).
+#' @param pkg_generics Character vector of S3 generics defined in the
+#'   package itself, used for S3 method detection in usage lines.
 #' @return Character string of Rd content.
 #' @keywords internal
 generate_rd <- function(tags, formals = NULL, source_file = NULL,
@@ -332,6 +334,8 @@ escape_rd <- function(text) {
 #'
 #' @param name Function name.
 #' @param args Character vector of arguments with defaults.
+#' @param pkg_generics Character vector of S3 generics defined in the
+#'   package itself, used for S3 method detection.
 #' @return Formatted usage string.
 #' @keywords internal
 format_usage <- function(name, args, pkg_generics = character()) {
@@ -504,6 +508,8 @@ write_rd <- function(content, name, path = ".") {
 #' @param topic Topic name (the @rdname value).
 #' @param entries List of list(tags, block) pairs sharing this topic.
 #' @param all_tags All parsed tags (for @inheritParams resolution).
+#' @param pkg_generics Character vector of S3 generics defined in the
+#'   package itself, used for S3 method detection in usage lines.
 #' @return Character string of merged Rd content.
 #' @keywords internal
 generate_rd_grouped <- function(topic, entries, all_tags,
