@@ -14,7 +14,7 @@ parse_file <- function(file) {
     lines <- readLines(file, encoding = "UTF-8", warn = FALSE)
 
     # Find documentation blocks (consecutive #' lines)
-    doc_lines <- grep("^#'", lines)
+    doc_lines <- grep("^##?'", lines)
 
     if (length(doc_lines) == 0) {
         return(list())
@@ -43,8 +43,8 @@ parse_file <- function(file) {
     result <- list()
 
     for (block_lines in blocks) {
-        # Extract the comment text (strip #' prefix)
-        comment_text <- sub("^#'\\s?", "", lines[block_lines])
+        # Extract the comment text (strip #' or ##' prefix)
+        comment_text <- sub("^##?'\\s?", "", lines[block_lines])
 
         # Find the object definition after the block. Blank lines and plain
         # comments between the block and its object are allowed; another #'
@@ -52,12 +52,12 @@ parse_file <- function(file) {
         next_line <- max(block_lines) + 1
 
         while (next_line <= length(lines) &&
-            !grepl("^\\s*#'", lines[next_line]) &&
+            !grepl("^\\s*##?'", lines[next_line]) &&
             grepl("^\\s*(#|$)", lines[next_line])) {
             next_line <- next_line + 1
         }
 
-        if (next_line > length(lines) || grepl("^\\s*#'", lines[next_line])) {
+        if (next_line > length(lines) || grepl("^\\s*##?'", lines[next_line])) {
             warning("Documentation block at ", basename(file), ":",
                     block_lines[1], " is not followed by an object ",
                     "definition; its tags are ignored.", call. = FALSE)
